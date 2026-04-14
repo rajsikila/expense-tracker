@@ -9,34 +9,101 @@ HTML = """
 <html>
 <head>
     <title>Expense Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f8;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f9f9f9;
+            margin: 8px;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        a {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+    </style>
 </head>
-<body style="font-family: Arial; text-align:center;">
+<body>
 
-    <h1>💸 Expense Tracker</h1>
-    <h3>Track your daily spending (Cloud App)</h3>
+    <div class="container">
+        <h1>💸 Expense Tracker</h1>
 
-    <form method="POST">
-        <input type="text" name="desc" placeholder="Expense description" required>
-        <input type="number" name="amount" placeholder="Amount" required>
-        <button type="submit">Add</button>
-    </form>
+        <form method="POST">
+            <input type="text" name="desc" placeholder="Description" required>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <button type="submit">Add</button>
+        </form>
 
-    <h2>Expenses:</h2>
-    <ul>
-        {% for e in expenses %}
-            <li>
-                {{ e[0] }} - ₹{{ e[1] }}
-                <a href="/delete/{{ loop.index0 }}">❌</a>
-            </li>
-        {% endfor %}
-    </ul>
+        <h3>Expenses</h3>
+        <ul>
+            {% for e in expenses %}
+                <li>
+                    {{ e[0] }} - ₹{{ e[1] }}
+                    <a href="/delete/{{ loop.index0 }}">✖</a>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <h2>Total: ₹{{ total }}</h2>
+        <div class="total">Total: ₹{{ total }}</div>
+    </div>
 
 </body>
 </html>
 """
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
