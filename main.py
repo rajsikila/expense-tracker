@@ -8,98 +8,101 @@ HTML = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Expense Tracker</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f4f6f8;
-            text-align: center;
-        }
+<title>Expense Tracker</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #0f172a;
+        color: white;
+    }
 
-        .container {
-            background: white;
-            width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+    .container {
+        max-width: 500px;
+        margin: 40px auto;
+        background: #1e293b;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
 
-        h1 {
-            color: #333;
-        }
+    h1 {
+        color: #38bdf8;
+        text-align: center;
+    }
 
-        input {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
+    form {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
 
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            background: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
+    input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        background: #334155;
+        color: white;
+    }
 
-        button:hover {
-            background: #45a049;
-        }
+    button {
+        padding: 10px;
+        background: #22c55e;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+    }
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
+    button:hover {
+        background: #16a34a;
+    }
 
-        li {
-            background: #f9f9f9;
-            margin: 8px;
-            padding: 10px;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-        }
+    .card {
+        background: #334155;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
 
-        a {
-            color: red;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    .delete {
+        color: #ef4444;
+        text-decoration: none;
+        font-weight: bold;
+    }
 
-        .total {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-    </style>
+    .total {
+        margin-top: 20px;
+        font-size: 22px;
+        text-align: center;
+        color: #22c55e;
+    }
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>💸 Expense Tracker</h1>
+<div class="container">
+    <h1>💸 Expense Tracker</h1>
 
-        <form method="POST">
-            <input type="text" name="desc" placeholder="Description" required>
-            <input type="number" name="amount" placeholder="Amount" required>
-            <button type="submit">Add</button>
-        </form>
+    <form method="POST">
+        <input type="text" name="desc" placeholder="Description" required>
+        <input type="number" name="amount" placeholder="Amount" required>
+        <button>Add</button>
+    </form>
 
-        <h3>Expenses</h3>
-        <ul>
-            {% for e in expenses %}
-                <li>
-                    {{ e[0] }} - ₹{{ e[1] }}
-                    <a href="/delete/{{ loop.index0 }}">✖</a>
-                </li>
-            {% endfor %}
-        </ul>
+    {% for e in expenses %}
+        <div class="card">
+            <span>{{ e[0] }} - ₹{{ e[1] }}</span>
+            <a class="delete" href="/delete/{{ loop.index0 }}">✖</a>
+        </div>
+    {% endfor %}
 
-        <div class="total">Total: ₹{{ total }}</div>
-    </div>
+    <div class="total">Total: ₹{{ total }}</div>
+</div>
 
 </body>
 </html>
